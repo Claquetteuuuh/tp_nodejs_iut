@@ -1,26 +1,45 @@
-
-void checkVictory(int param_1)
+void __libc_start_main(undefined8 param_1,undefined4 param_2,undefined8 *param_3,code *param_4,
+                      undefined8 param_5,long param_6)
 
 {
-  char *pcVar1;
-  char local_118 [264];
-  FILE *local_10;
+  undefined8 *puVar1;
+  long *plVar2;
+  undefined8 *puVar3;
+  uint uVar4;
+  int iVar5;
+  undefined8 *puVar6;
   
-  if (99999 < param_1) {
-    printf("\nCongratulations! You\'ve reached $%d!\n",100000);
-    local_10 = fopen("flag.txt","r");
-    if (local_10 != (FILE *)0x0) {
-      while( true ) {
-        pcVar1 = fgets(local_118,0x100,local_10);
-        if (pcVar1 == (char *)0x0) break;
-        printf("%s",local_118);
-      }
-      fclose(local_10);
-                    /* WARNING: Subroutine does not return */
-      exit(0);
-    }
-    puts("Flag file not found. Victory flag would be displayed here.");
+  if (param_6 != 0) {
+    __cxa_atexit(param_6,0,0);
   }
-  return;
+  uVar4 = __rtld_global_ro & 2;
+  if (uVar4 != 0) {
+    (*_DAT_00329368)("\ninitialize program: %s\n\n",*param_3);
+  }
+  if (param_4 == (code *)0x0) goto LAB_00129e40;
+  (*param_4)(param_2,param_3);
+  do {
+    do {
+      _dl_audit_preinit(__rtld_global);
+      if (uVar4 != 0) {
+        uVar4 = 0x329038;
+        (*_DAT_00329368)("\ntransferring control: %s\n\n",*param_3);
+      }
+      FUN_00129d10(param_1,param_2,param_3);
+LAB_00129e40:
+      plVar2 = __rtld_global;
+      if (__rtld_global[0x14] != 0) {
+        (*(code *)(*(long *)(__rtld_global[0x14] + 8) + *__rtld_global))(param_2,param_3);
+      }
+    } while (plVar2[0x21] == 0);
+    puVar3 = (undefined8 *)(*plVar2 + *(long *)(plVar2[0x21] + 8));
+    iVar5 = (int)(*(ulong *)(plVar2[0x23] + 8) >> 3);
+    if (iVar5 != 0) {
+      puVar1 = puVar3 + 1;
+      for (puVar6 = puVar1; (*(code *)*puVar3)(param_2,param_3), puVar1 + (iVar5 - 1) != puVar6;
+          puVar6 = puVar6 + 1) {
+        puVar3 = puVar6;
+      }
+    }
+  } while( true );
 }
-
