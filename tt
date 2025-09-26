@@ -1,0 +1,224 @@
+
+undefined8 main(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  int iVar3;
+  undefined8 uVar4;
+  long lVar5;
+  undefined1 local_148 [16];
+  undefined1 local_138 [16];
+  undefined1 local_128 [16];
+  undefined1 local_118 [16];
+  undefined1 local_108 [16];
+  undefined1 local_f8 [16];
+  undefined1 local_e8 [16];
+  undefined1 local_d8 [16];
+  undefined1 local_c8 [16];
+  undefined1 local_b8 [16];
+  undefined1 local_a8 [16];
+  undefined1 local_98 [16];
+  undefined1 local_88 [16];
+  undefined1 local_78 [16];
+  undefined1 local_68 [16];
+  char local_56;
+  char local_55;
+  int local_54;
+  int local_50;
+  char local_49;
+  uint local_48;
+  int local_44;
+  int local_40;
+  int local_3c;
+  FILE *local_38;
+  int local_2c;
+  int local_28;
+  int local_24;
+  int local_20;
+  uint local_1c;
+  
+  ignore_me_init_buffering();
+  ignore_me_init_signal();
+  local_38 = fopen("/dev/urandom","r");
+  if (local_38 == (FILE *)0x0) {
+    puts("Error: Cannot open /dev/urandom");
+    uVar4 = 1;
+  }
+  else {
+    fread(&local_48,4,1,local_38);
+    fclose(local_38);
+    srand(local_48);
+    local_1c = 1000;
+    local_49 = 'y';
+    while (((local_49 == 'y' && (0 < (int)local_1c)) && ((int)local_1c < 100000))) {
+      local_148 = (undefined1  [16])0x0;
+      local_138 = (undefined1  [16])0x0;
+      local_128 = (undefined1  [16])0x0;
+      local_118 = (undefined1  [16])0x0;
+      local_108 = (undefined1  [16])0x0;
+      local_f8 = (undefined1  [16])0x0;
+      local_e8 = (undefined1  [16])0x0;
+      local_d8 = (undefined1  [16])0x0;
+      local_c8 = (undefined1  [16])0x0;
+      local_b8 = (undefined1  [16])0x0;
+      local_a8 = (undefined1  [16])0x0;
+      local_98 = (undefined1  [16])0x0;
+      local_88 = (undefined1  [16])0x0;
+      local_78 = (undefined1  [16])0x0;
+      local_68 = (undefined1  [16])0x0;
+      local_20 = 0;
+      local_24 = 0;
+      local_28 = 0;
+      local_54 = 0;
+      local_2c = 0;
+      do {
+        do {
+          printf("\nCurrent balance: $%d\n",(ulong)local_1c);
+          printf("Enter your bet (1-%d): ",(ulong)local_1c);
+          __isoc99_scanf(&DAT_00102097,&local_50);
+          iVar2 = local_20;
+        } while (local_50 < 1);
+      } while ((int)local_1c < local_50);
+      local_20 = local_20 + 1;
+      uVar1 = drawCard();
+      *(undefined4 *)(local_148 + (long)iVar2 * 8) = uVar1;
+      iVar2 = local_24;
+      local_24 = local_24 + 1;
+      uVar1 = drawCard();
+      *(undefined4 *)(local_f8 + (long)iVar2 * 8) = uVar1;
+      iVar2 = local_20;
+      local_20 = local_20 + 1;
+      uVar1 = drawCard();
+      *(undefined4 *)(local_148 + (long)iVar2 * 8) = uVar1;
+      iVar2 = local_24;
+      local_24 = local_24 + 1;
+      uVar1 = drawCard();
+      *(undefined4 *)(local_f8 + (long)iVar2 * 8) = uVar1;
+      printf("\nDealer\'s first card: %d\n",(ulong)(uint)local_f8._0_4_);
+      printf("Your hand: ");
+      printHand(local_148,local_20);
+      if (local_148._0_4_ == local_148._8_4_) {
+        printf("\nYou can split! Do you want to? (y/n): ");
+        __isoc99_scanf(&DAT_001020e8,&local_56);
+        if (local_56 == 'y') {
+          local_2c = 1;
+          printf("Enter bet for split hand: ");
+          __isoc99_scanf(&DAT_00102097,&local_54);
+          lVar5 = (long)local_28;
+          local_28 = local_28 + 1;
+          *(undefined8 *)(local_a8 + lVar5 * 8) = local_148._8_8_;
+          local_20 = local_20 + -1;
+        }
+      }
+      do {
+        printf("\nHit or Stand (h/s): ");
+        __isoc99_scanf(&DAT_001020e8,&local_55);
+        iVar2 = local_20;
+        if (local_55 == 'h') {
+          local_20 = local_20 + 1;
+          uVar1 = drawCard();
+          *(undefined4 *)(local_148 + (long)iVar2 * 8) = uVar1;
+          printf("Your hand: ");
+          printHand(local_148,local_20);
+          iVar2 = calculateHand(local_148,local_20);
+          if (0x15 < iVar2) {
+            puts("Bust!");
+            break;
+          }
+        }
+      } while (local_55 == 'h');
+      iVar2 = local_28;
+      if (local_2c != 0) {
+        local_28 = local_28 + 1;
+        uVar1 = drawCard();
+        *(undefined4 *)(local_a8 + (long)iVar2 * 8) = uVar1;
+        printf("\nSplit hand: ");
+        printHand(local_a8,local_28);
+        do {
+          printf("Hit or Stand on split (h/s): ");
+          __isoc99_scanf(&DAT_001020e8,&local_55);
+          iVar2 = local_28;
+          if (local_55 == 'h') {
+            local_28 = local_28 + 1;
+            uVar1 = drawCard();
+            *(undefined4 *)(local_a8 + (long)iVar2 * 8) = uVar1;
+            printf("Split hand: ");
+            printHand(local_a8,local_28);
+            iVar2 = calculateHand(local_a8,local_28);
+            if (0x15 < iVar2) {
+              puts("Split hand bust!");
+              break;
+            }
+          }
+        } while (local_55 == 'h');
+      }
+      printf("\nDealer\'s hand: ");
+      printHand(local_f8,local_24);
+      while( true ) {
+        iVar3 = calculateHand(local_f8,local_24);
+        iVar2 = local_24;
+        if (0x10 < iVar3) break;
+        local_24 = local_24 + 1;
+        uVar1 = drawCard();
+        *(undefined4 *)(local_f8 + (long)iVar2 * 8) = uVar1;
+        printf("Dealer draws: ");
+        printHand(local_f8,local_24);
+      }
+      local_3c = calculateHand(local_148,local_20);
+      local_40 = calculateHand(local_f8,local_24);
+      local_44 = calculateHand(local_a8,local_28);
+      if (local_3c < 0x16) {
+        if ((local_40 < 0x16) && (local_3c <= local_40)) {
+          if (local_3c < local_40) {
+            local_1c = local_1c - local_50;
+            puts("\nDealer wins main hand!");
+          }
+          else {
+            puts("\nPush on main hand!");
+          }
+        }
+        else {
+          puts("\nYou win main hand!");
+          local_1c = local_1c + local_50;
+        }
+      }
+      else {
+        puts("\nYou lose main hand!");
+        local_1c = local_1c - local_50;
+      }
+      if (local_2c != 0) {
+        if (local_44 < 0x16) {
+          if ((local_40 < 0x16) && (local_44 <= local_40)) {
+            if (local_44 < local_40) {
+              local_1c = local_1c - local_54;
+              puts("Dealer wins split hand!");
+            }
+            else {
+              puts("Push on split hand!");
+            }
+          }
+          else {
+            puts("You win split hand!");
+            local_1c = local_1c + local_54;
+          }
+        }
+        else {
+          puts("You lose split hand!");
+          local_1c = local_1c - local_54;
+        }
+      }
+      checkVictory(local_1c);
+      if ((0 < (int)local_1c) && ((int)local_1c < 100000)) {
+        printf("\nPlay again? (y/n): ");
+        __isoc99_scanf(&DAT_001020e8,&local_49);
+      }
+    }
+    if ((int)local_1c < 1) {
+      puts("\nYou\'re broke! Game over.");
+    }
+    printf("\nFinal balance: $%d\n",(ulong)local_1c);
+    uVar4 = 0;
+  }
+  return uVar4;
+}
